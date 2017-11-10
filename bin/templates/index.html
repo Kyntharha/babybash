@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <title>Baby Bash</title>
+	
+	    <div th:replace="fragments/headFragment :: headFragment"/>
+	
+	</head>
+	
+	<body>
+		<div class="container">
+			<div th:replace="fragments/navBar :: navBar"/>
+			
+			<h1>Baby Bash</h1>
+			
+			<div th:each="quote : ${quoteList}" class="card" style="width: 20rem;">
+  				<div class="card-body">
+  					<h6 class="card-subtitle mb-2 text-muted" th:text="${quote.getCreationDate()}"></h6>
+	    			<p class="card-text" th:text="${quote.getQuote()}"></p>
+	    			<button type="button" class="btn btn-primary btn-sm">+</button>
+	    			<span>Votes: <span th:text="${quote.getVotes()}"></span></span>
+	    			<button type="button" class="btn btn-primary btn-sm">-</button>
+  				</div>
+			</div>
+		</div>	
+	</body>
+</html>
