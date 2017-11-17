@@ -19,7 +19,6 @@ public class DefaultController
 	@GetMapping("/")
 	public String index(ModelMap model)
 	{
-		//TODO: switch hibernate to "update" and remove the testdata
 		quoteRepository.save(new Quote("blargh"));
 		quoteRepository.save(new Quote("blargh2"));
 		quoteRepository.save(new Quote("blargh3"));
