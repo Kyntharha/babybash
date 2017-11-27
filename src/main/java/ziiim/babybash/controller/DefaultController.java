@@ -25,7 +25,8 @@ public class DefaultController
 		quoteRepository.save(new Quote("blargh4"));
 
 		//TODO: fetch only a specific amount of quotes;
-		List<Quote> quoteList = quoteRepository.findAll();
+		//List<Quote> quoteList = quoteRepository.top10PublishedIsTrueByCreationDateDesc();
+		List<Quote> quoteList = quoteRepository.findFirst10ByPublishedIsTrueOrderByCreationDateDesc();
 		model.addAttribute("quoteList", quoteList);
 
 		return "/index";

@@ -20,10 +20,12 @@ public class Quote
 
 	private String quote;
 	
-	private Integer votes;
+	private Integer votes = 0;
+	
+	private Boolean published = false;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date creationDate;
+	private Date creationDate = new Date();
 
 	protected Quote()
 	{
@@ -32,8 +34,6 @@ public class Quote
 	public Quote(String quote)
 	{
 		this.quote = quote;
-		this.creationDate = new Date();
-		this.votes = 0;
 	}
 
 	public Integer getId()
@@ -70,16 +70,17 @@ public class Quote
 	{
 		return quote;
 	}
-	
-	public void increaseVotes()
+		
+	public boolean getPublished()
 	{
-		//TODO: prevent race condition
-		votes += 1;
+		return published;
 	}
 	
-	public void decreaseVotes()
+	public boolean togglePublished()
 	{
-		//TODO: prevent race condition
-		votes -= 1;
+		if (published) published = false;
+		else published = true;
+		
+		return published;
 	}
 }
