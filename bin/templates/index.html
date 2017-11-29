@@ -18,7 +18,7 @@
   					<h6 class="card-subtitle mb-2 text-muted" th:text="${quote.getCreationDate()}"></h6>
 	    			<p class="card-text" th:text="${quote.getQuote()}"></p>
 	    			<button type="button" class="btn btn-primary btn-sm">+</button>
-	    			<span>Votes: <span th:text="${quote.getVotes()}"></span></span>
+	    			<span>Votes: <span th:text="${quote.getVoteCount()}"></span></span>
 	    			<button type="button" class="btn btn-primary btn-sm">-</button>
   				</div>
 			</div>

@@ -53,10 +53,15 @@ public class Vote
 	}
 	
     @Override
-    public boolean equals(Object o) {
+   /* public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Vote )) return false;
         return id != null && id.equals(((Vote) o).id);
+    }*/
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Vote )) return false;
+        return quote != null && vote != 0 && quote.equals(((Vote) o).quote) && vote == ((Vote) o).vote;
     }
     
     @Override

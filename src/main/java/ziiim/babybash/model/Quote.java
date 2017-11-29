@@ -15,7 +15,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 
-
 @Entity
 @Table(name = "quotes")
 public class Quote
@@ -62,6 +61,7 @@ public class Quote
 	
 	public void addVote(Vote vote)
 	{
+		if(voteList.contains(vote)) removeVote(vote);
 		voteList.add(vote);
 		vote.setQuote(this);
 	}
@@ -76,7 +76,7 @@ public class Quote
 	{
 		if (published) published = false;
 		else published = true;
-		
+				
 		return published;
 	}
 	

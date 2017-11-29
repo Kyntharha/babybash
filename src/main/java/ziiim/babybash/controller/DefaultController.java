@@ -19,7 +19,9 @@ public class DefaultController
 	@GetMapping("/")
 	public String index(ModelMap model)
 	{
-		quoteRepository.save(new Quote("blargh"));
+		Quote newPublished = new Quote("blarghNewPublished");
+		quoteRepository.save(newPublished);
+		newPublished.togglePublished();
 		quoteRepository.save(new Quote("blargh2"));
 		quoteRepository.save(new Quote("blargh3"));
 		quoteRepository.save(new Quote("blargh4"));
