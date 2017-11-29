@@ -14,7 +14,7 @@ import ziiim.babybash.repository.QuoteRepository;
 public class DefaultController
 {
 	@Autowired
-	QuoteRepository quoteRepository;
+	private QuoteRepository quoteRepository;
 
 	@GetMapping("/")
 	public String index(ModelMap model)
