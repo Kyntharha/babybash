@@ -6,10 +6,12 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,8 +22,9 @@ import javax.persistence.TemporalType;
 public class Quote
 {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	@SequenceGenerator(name="quote_id_seq", sequenceName="quote_id_seq", allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="quote_id_seq")
+	private Long id;
 
 	private String quote;
 	
@@ -29,7 +32,8 @@ public class Quote
 	(
 			mappedBy="quote",
 			cascade = CascadeType.ALL,
-			orphanRemoval = true
+			orphanRemoval = true,
+			fetch = FetchType.EAGER
 	)
 	private List<Vote> voteList = new ArrayList<Vote>();
 	
@@ -63,13 +67,12 @@ public class Quote
 	{
 		if(voteList.contains(vote)) removeVote(vote);
 		voteList.add(vote);
-		vote.setQuote(this);
 	}
 	
 	public void removeVote(Vote vote)
 	{
 		voteList.remove(vote);
-		vote.setQuote(null);
+		vote.remove();
 	}
 	
 	public boolean togglePublished()
@@ -79,18 +82,13 @@ public class Quote
 				
 		return published;
 	}
-	
-	public String toString()
-	{
-		return quote;
-	}
-		
+			
 	public boolean getPublished()
 	{
 		return published;
 	}
 		
-	public Integer getId()
+	public Long getId()
 	{
 		return id;
 	}

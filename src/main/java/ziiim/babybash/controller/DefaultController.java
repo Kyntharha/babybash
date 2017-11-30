@@ -19,12 +19,12 @@ public class DefaultController
 	@GetMapping("/")
 	public String index(ModelMap model)
 	{
-		Quote newPublished = new Quote("blarghNewPublished");
-		quoteRepository.save(newPublished);
-		newPublished.togglePublished();
-		quoteRepository.save(new Quote("blargh2"));
-		quoteRepository.save(new Quote("blargh3"));
-		quoteRepository.save(new Quote("blargh4"));
+//		Quote newPublished = new Quote("blarghNewPublished");
+//		quoteRepository.save(newPublished);
+//		newPublished.togglePublished();
+//		quoteRepository.save(new Quote("blargh2"));
+//		quoteRepository.save(new Quote("blargh3"));
+//		quoteRepository.save(new Quote("blargh4"));
 
 		List<Quote> quoteList = quoteRepository.findFirst10ByPublishedIsTrueOrderByCreationDateDesc();
 		model.addAttribute("quoteList", quoteList);

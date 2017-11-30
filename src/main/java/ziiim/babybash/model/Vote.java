@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -17,8 +18,9 @@ import javax.validation.constraints.NotNull;
 public class Vote
 {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	@SequenceGenerator(name="vote_id_seq", sequenceName="vote_id_seq", allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="vote_id_seq")
+	private Long id;
 
 	private String ip;
 	
@@ -46,61 +48,60 @@ public class Vote
 	{
 	}
 
-	public Vote(String ip, Value value)
+	/**
+	 * 
+	 * @param ip should not be null
+	 * @param quote should not be null or else it won't be persisted
+	 * @param value enum Vote.Value
+	 */
+	public Vote(String ip, Quote quote, Value value)
 	{
-		this.ip = ip;
+		setIp(ip);
+		this.quote = quote;
 		this.vote = value.getValue();
 	}
 	
     @Override
-   /* public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Vote )) return false;
-        return id != null && id.equals(((Vote) o).id);
-    }*/
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Vote )) return false;
-        return quote != null && vote != 0 && quote.equals(((Vote) o).quote) && vote == ((Vote) o).vote;
+        return quote != null && quote.equals(((Vote) o).quote) && ip.equals(((Vote) o).ip);
     }
     
     @Override
     public int hashCode() {
         return Objects.hash(ip, id);
     }
-
-    public void setQuote(Quote quote)
+    
+    /**
+     * sets the quote to null, which results in hibernate removing the vote from the database
+     */
+    public void remove()
     {
-    	this.quote = quote;
+    	quote = null;
     }
     
-	public Integer getId()
+	public Long getId()
 	{
 		return id;
+	}
+	
+	/**
+	 * @param ip can not be null
+	 */
+	private void setIp(String ip)
+	{
+		if (ip == null) ip = "0";
+		this.ip = ip;
 	}
 	
 	public String getIp()
 	{
 		return ip;
 	}
-
-	public void setIp(String ip)
-	{
-		this.ip = ip;
-	}
 	
 	public byte getVote()
 	{
 		return vote;
-	}
-	
-	public void setVote(byte vote)
-	{
-		this.vote = vote;
-	}
-	
-	public String toString()
-	{
-		return ""+vote;
 	}
 }

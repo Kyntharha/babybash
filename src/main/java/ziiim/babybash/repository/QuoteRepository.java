@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import ziiim.babybash.model.Quote;
 
 @Repository
-public interface QuoteRepository extends JpaRepository<Quote, Integer>
+public interface QuoteRepository extends JpaRepository<Quote, Long>
 {
 	public List<Quote> findFirst10ByPublishedIsTrueOrderByCreationDateDesc();
 }

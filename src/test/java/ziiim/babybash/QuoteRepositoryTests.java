@@ -1,7 +1,6 @@
 package ziiim.babybash;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -52,19 +51,10 @@ public class QuoteRepositoryTests
 	@Test
 	public void findsQuotesById()
 	{
-		Quote found = quoteRepository.findOne(1);
+		Quote found = quoteRepository.findOne(1L);
 		assertThat(found.getQuote()).isEqualTo("blargh0");
 	}
-	
-	@Test
-	public void togglesPublished()
-	{
-		// tooglePublished switches 'published' and returns the new status;
-		Quote quote = quoteRepository.findOne(1);
-		assertTrue(quote.togglePublished());
-		assertFalse(quote.togglePublished());
-	}
-		
+			
 	@Test
 	@DirtiesContext
 	public void showLatest10PublishedQuotesCheckThatAllArePublished()

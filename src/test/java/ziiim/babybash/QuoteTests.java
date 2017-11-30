@@ -1,66 +1,61 @@
 package ziiim.babybash;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ziiim.babybash.model.Quote;
 import ziiim.babybash.model.Vote;
-import ziiim.babybash.repository.QuoteRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
 public class QuoteTests
 {
-	@Autowired
-	private QuoteRepository quoteRepository;
-			
-	private Quote quote;
-	
-	
-	@Before
-	public void initialize()
-	{
-		quote = new Quote("blargh0");
-		quoteRepository.save(quote);
-	}
-	
 	@Test
-	@DirtiesContext
 	public void addVote()
 	{
-		Vote vote = new Vote("5465454fdfh", Vote.Value.POSITIVE);
+		Quote quote = new Quote("blargh0");
+		Vote vote = new Vote("5465454fdfh", quote, Vote.Value.POSITIVE);
 		quote.addVote(vote);
 		
 		assertThat(quote.getVoteList().size()).isEqualTo(1);
 	}
 	
 	@Test
-	@DirtiesContext
-	public void addVoteAndVoteShouldBeUniquePerIp()
+	public void togglesPublished()
 	{
-		Vote vote1 = new Vote("5465454fdfh", Vote.Value.POSITIVE);
-		quote.addVote(vote1);
-		
-		Vote vote2 = new Vote("5465454fdfh", Vote.Value.POSITIVE);
-		quote.addVote(vote2);
-
-		assertThat(quote.getVoteList().size()).isEqualTo(1);
+		// tooglePublished switches 'published' and returns the new status;
+		Quote quote = new Quote("blargh0");
+		assertTrue(quote.togglePublished());
+		assertFalse(quote.togglePublished());
 	}
 	
 	@Test
-	@DirtiesContext
+	public void addVoteVoteShouldBeUniquePerIpAndNewVoteReplacesOld()
+	{
+		Quote quote = new Quote("blargh0");
+		Vote vote1 = new Vote("5465454fdfh", quote, Vote.Value.POSITIVE);
+		quote.addVote(vote1);
+		
+		Vote vote2 = new Vote("5465454fdfh", quote, Vote.Value.NEGATIVE);
+		quote.addVote(vote2);
+
+		assertThat(quote.getVoteList().size()).isEqualTo(1);
+		assertThat(quote.getVoteList().get(0).getVote()).isEqualTo((byte)-1);
+	}
+		
+	@Test
 	public void removeVote()
 	{
-		Vote vote = new Vote("5465454fdfh", Vote.Value.POSITIVE);
+		Quote quote = new Quote("blargh0");
+		Vote vote = new Vote("5465454fdfh", quote, Vote.Value.POSITIVE);
 		quote.addVote(vote);
 		quote.removeVote(vote);
 		
@@ -68,54 +63,54 @@ public class QuoteTests
 	}
 	
 	@Test
-	@DirtiesContext
 	public void getVoteCountPositive()
 	{
-		Vote vote1 = new Vote("1", Vote.Value.POSITIVE);
+		Quote quote = new Quote("blargh0");
+		Vote vote1 = new Vote("1", quote, Vote.Value.POSITIVE);
 		quote.addVote(vote1);
 		
-		Vote vote2 = new Vote("2", Vote.Value.POSITIVE);
+		Vote vote2 = new Vote("2", quote, Vote.Value.POSITIVE);
 		quote.addVote(vote2);
 		
-		Vote vote3 = new Vote("3", Vote.Value.POSITIVE);
+		Vote vote3 = new Vote("3", quote, Vote.Value.POSITIVE);
 		quote.addVote(vote3);
 		
 		assertThat(quote.getVoteCount()).isEqualTo(3);
 	}
 	
 	@Test
-	@DirtiesContext
 	public void getVoteCountNegative()
 	{	
-		Vote vote1 = new Vote("1", Vote.Value.NEGATIVE);
+		Quote quote = new Quote("blargh0");
+		Vote vote1 = new Vote("1", quote, Vote.Value.NEGATIVE);
 		quote.addVote(vote1);
 		
-		Vote vote2 = new Vote("2", Vote.Value.NEGATIVE);
+		Vote vote2 = new Vote("2", quote, Vote.Value.NEGATIVE);
 		quote.addVote(vote2);
 		
-		Vote vote3 = new Vote("3", Vote.Value.NEGATIVE);
+		Vote vote3 = new Vote("3", quote, Vote.Value.NEGATIVE);
 		quote.addVote(vote3);
 		
 		assertThat(quote.getVoteCount()).isEqualTo(-3);
 	}
 	
 	@Test
-	@DirtiesContext
 	public void getVoteCountMixed()
 	{
-		Vote vote1 = new Vote("1", Vote.Value.POSITIVE);
+		Quote quote = new Quote("blargh0");
+		Vote vote1 = new Vote("1", quote, Vote.Value.POSITIVE);
 		quote.addVote(vote1);
 		
-		Vote vote2 = new Vote("2", Vote.Value.POSITIVE);
+		Vote vote2 = new Vote("2", quote, Vote.Value.POSITIVE);
 		quote.addVote(vote2);
 		
-		Vote vote3 = new Vote("3", Vote.Value.POSITIVE);
+		Vote vote3 = new Vote("3", quote, Vote.Value.POSITIVE);
 		quote.addVote(vote3);
 		
-		Vote vote4 = new Vote("4", Vote.Value.NEGATIVE);
+		Vote vote4 = new Vote("4", quote, Vote.Value.NEGATIVE);
 		quote.addVote(vote4);
 		
-		Vote vote5 = new Vote("5", Vote.Value.NEGATIVE);
+		Vote vote5 = new Vote("5", quote, Vote.Value.NEGATIVE);
 		quote.addVote(vote5);
 		
 		assertThat(quote.getVoteCount()).isEqualTo(1);
