@@ -63,10 +63,18 @@ public class Quote
 		return count;
 	}
 	
-	public void addVote(Vote vote)
+	public void addVote(Vote newVote)
 	{
-		if(voteList.contains(vote)) removeVote(vote);
-		voteList.add(vote);
+		boolean isDuplicate = false;
+		for(Vote oldVote: voteList)
+		{
+			if(oldVote.equals(newVote))
+			{
+				oldVote.setVote(newVote.getVote());
+				isDuplicate = true;
+			}
+		}
+		if (isDuplicate == false) voteList.add(newVote);
 	}
 	
 	public void removeVote(Vote vote)

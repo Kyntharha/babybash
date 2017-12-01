@@ -91,8 +91,8 @@ public class Vote
 	 */
 	private void setIp(String ip)
 	{
-		if (ip == null) ip = "0";
-		this.ip = ip;
+		if (ip == null) this.ip = "0";
+		else this.ip = ip;		
 	}
 	
 	public String getIp()
@@ -103,5 +103,10 @@ public class Vote
 	public byte getVote()
 	{
 		return vote;
+	}
+	
+	public void setVote(byte vote)
+	{
+		this.vote = vote;
 	}
 }
