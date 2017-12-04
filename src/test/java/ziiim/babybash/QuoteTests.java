@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -14,7 +13,6 @@ import ziiim.babybash.model.Quote;
 import ziiim.babybash.model.Vote;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
 @ActiveProfiles("test")
 public class QuoteTests
 {
@@ -23,6 +21,8 @@ public class QuoteTests
 	{
 		Quote quote = new Quote("blargh0");
 		Vote vote = new Vote("5465454fdfh", quote, Vote.Value.POSITIVE);
+		assertThat(quote).isNotNull();
+		assertThat(vote).isNotNull();
 		quote.addVote(vote);
 		
 		assertThat(quote.getVoteList().size()).isEqualTo(1);

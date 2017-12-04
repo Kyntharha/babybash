@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -14,7 +13,6 @@ import ziiim.babybash.model.Quote;
 import ziiim.babybash.model.Vote;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
 @ActiveProfiles("test")
 public class VoteTests
 {
