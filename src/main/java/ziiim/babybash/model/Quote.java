@@ -74,7 +74,7 @@ public class Quote
 				isDuplicate = true;
 			}
 		}
-		if (isDuplicate == false) voteList.add(newVote);
+		if (isDuplicate) voteList.add(newVote);
 	}
 	
 	public void removeVote(Vote vote)
