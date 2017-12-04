@@ -16,7 +16,7 @@ public class DefaultController
 	@Autowired
 	private QuoteRepository quoteRepository;
 
-	@GetMapping("/")
+	@GetMapping(value = {"/", "index", "home"})
 	public String index(ModelMap model)
 	{
 //		Quote newPublished = new Quote("blarghNewPublished");

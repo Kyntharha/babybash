@@ -14,7 +14,7 @@ import ziiim.babybash.controller.DefaultController;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-public class BabybashApplicationTests
+public class SmokeTest
 {
 	@Autowired
 	private DefaultController controller;
