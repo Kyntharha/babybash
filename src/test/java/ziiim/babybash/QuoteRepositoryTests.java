@@ -3,8 +3,8 @@ package ziiim.babybash;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -58,6 +58,26 @@ public class QuoteRepositoryTests
 		}
 	}
 	
+	/*@Test
+	public void showLatest10PublishedQuotes_CheckThatNoneAreDeleted()
+	{
+		// add 3 published quotes and 2 unpublished
+		for(int i=0; i<5; i++)
+		{
+			Quote quote = new Quote("Blargh"+i);
+			if(i < 3) quote.togglePublished();
+			quoteList.add(quote);
+		}
+		quoteRepository.save(quoteList);
+				
+		List<Quote> publishedQuotes = quoteRepository.findFirst10ByPublishedIsTrueOrderByCreationDateDesc();
+		
+		for (Quote quote: publishedQuotes)
+		{
+			assertTrue(quote.getPublished());
+		}
+	}*/
+	
 	@Test
 	public void showLatest10PublishedQuotes_CheckOrder()
 	{
@@ -66,7 +86,7 @@ public class QuoteRepositoryTests
 		{
 			Quote quote = new Quote("Blargh"+i);
 			quote.togglePublished();
-			quote.setCreationDate(new Date(1000*i));
+			quote.setCreationDate(LocalDateTime.of(100*i, 1, 1, 1, 1));
 			quoteList.add(quote);
 		}
 		quoteRepository.save(quoteList);
@@ -78,7 +98,7 @@ public class QuoteRepositoryTests
 		for(int i=0; i<3; i++)
 		{
 			Quote quote = publishedQuotes.get(i);
-			assertThat(quote.getCreationDate().getTime()).isEqualTo(1000*j);
+			assertThat(quote.getCreationDate().getYear()).isEqualTo(100*j);
 			j--;
 		}
 	}

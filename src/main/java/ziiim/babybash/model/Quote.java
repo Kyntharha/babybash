@@ -1,7 +1,7 @@
 package ziiim.babybash.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 
 @Entity
@@ -38,9 +36,10 @@ public class Quote
 	private List<Vote> voteList = new ArrayList<Vote>();
 	
 	private Boolean published = false;
+	
+	private Boolean rejected = false;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date creationDate = new Date();
+	private LocalDateTime creationDate = LocalDateTime.now();
 
 	protected Quote()
 	{
@@ -90,10 +89,23 @@ public class Quote
 				
 		return published;
 	}
+	
+	public boolean toggleRejected()
+	{
+		if (rejected) rejected = false;
+		else rejected = true;
+				
+		return rejected;
+	}
 			
 	public boolean getPublished()
 	{
 		return published;
+	}
+	
+	public boolean getRejected()
+	{
+		return rejected;
 	}
 		
 	public Long getId()
@@ -111,7 +123,7 @@ public class Quote
 		return this.voteList;
 	}
 
-	public Date getCreationDate()
+	public LocalDateTime getCreationDate()
 	{
 		return creationDate;
 	}
@@ -121,7 +133,7 @@ public class Quote
 		this.quote = quote;
 	}
 
-	public void setCreationDate(Date creationDate)
+	public void setCreationDate(LocalDateTime creationDate)
 	{
 		this.creationDate = creationDate;
 	}
