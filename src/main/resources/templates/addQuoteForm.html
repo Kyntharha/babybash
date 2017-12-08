@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Baby Bash</title>
+
+<div th:replace="fragments/headFragment :: headFragment" />
+
+</head>
+
+<body>
+	<div class="container">
+		<div th:replace="fragments/navBar :: navBar" />
+
+		<h1>Baby Bash</h1>
+
+		<form action="#" th:action="@{/add}" th:object="${addQuoteForm}" method="post">
+			<table>
+				<tr>
+					<td>Zitat:</td>
+					<td><textarea th:field="*{quote}"></textarea></td>
+					<td th:if="${#fields.hasErrors('quote')}" th:errors="*{quote}">Zitat Fehler</td>
+				</tr>
+				<tr>
+					<td><button type="submit">Submit</button></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>
+
+

@@ -1,5 +1,6 @@
 package ziiim.babybash;
 
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -45,16 +46,27 @@ public class DefaultControllerTests
 
 		when(quoteRepository.findFirst10ByPublishedIsTrueOrderByCreationDateDesc()).thenReturn(quoteList);
 
-		mockMvc.perform(get("/")).andExpect(status().isOk())
+		mockMvc.perform(get("/"))
+				.andExpect(status().isOk())
 				.andExpect(model().attribute("quoteList", is(quoteList)))
 				.andExpect(view().name("/index"));
 
-		mockMvc.perform(get("/index")).andExpect(status().isOk())
+		mockMvc.perform(get("/index"))
+				.andExpect(status().isOk())
 				.andExpect(model().attribute("quoteList", is(quoteList)))
 				.andExpect(view().name("/index"));
 		
-		mockMvc.perform(get("/home")).andExpect(status().isOk())
+		mockMvc.perform(get("/home"))
+				.andExpect(status().isOk())
 				.andExpect(model().attribute("quoteList", is(quoteList)))
 				.andExpect(view().name("/index"));
+	}
+	
+	@Test
+	public void addMapping() throws Exception
+	{
+		mockMvc.perform(get("/add"))
+				.andExpect(status().isOk())
+				.andExpect(view().name("/addQuoteForm"));
 	}
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import ziiim.babybash.form.AddQuoteForm;
 import ziiim.babybash.model.Quote;
 import ziiim.babybash.repository.QuoteRepository;
 
@@ -17,18 +18,17 @@ public class DefaultController
 	private QuoteRepository quoteRepository;
 
 	@GetMapping(value = {"/", "index", "home"})
-	public String index(ModelMap model)
+	public String showIndex(ModelMap model)
 	{
-//		Quote newPublished = new Quote("blarghNewPublished");
-//		quoteRepository.save(newPublished);
-//		newPublished.togglePublished();
-//		quoteRepository.save(new Quote("blargh2"));
-//		quoteRepository.save(new Quote("blargh3"));
-//		quoteRepository.save(new Quote("blargh4"));
-
 		List<Quote> quoteList = quoteRepository.findFirst10ByPublishedIsTrueOrderByCreationDateDesc();
 		model.addAttribute("quoteList", quoteList);
 		
 		return "/index";
+	}
+	
+	@GetMapping(value = "/add")
+	public String showAddQuoteForm(AddQuoteForm addQuoteForm)
+	{
+		return "/addQuoteForm";
 	}
 }
