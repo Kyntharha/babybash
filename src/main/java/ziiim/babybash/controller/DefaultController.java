@@ -20,7 +20,7 @@ public class DefaultController
 	@GetMapping(value = {"/", "index", "home"})
 	public String showIndex(ModelMap model)
 	{
-		List<Quote> quoteList = quoteRepository.findFirst10ByPublishedIsTrueOrderByCreationDateDesc();
+		List<Quote> quoteList = quoteRepository.getRecentlyPublished(0, 10).getContent();
 		model.addAttribute("quoteList", quoteList);
 		
 		return "/index";
