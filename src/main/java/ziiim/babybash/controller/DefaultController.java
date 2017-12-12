@@ -26,9 +26,18 @@ public class DefaultController
 		return "/index";
 	}
 	
-	@GetMapping(value = "/add")
+	@GetMapping("/add")
 	public String showAddQuoteForm(AddQuoteForm addQuoteForm)
 	{
 		return "/addQuoteForm";
+	}
+	
+	@GetMapping("/queue")
+	public String showQueue(ModelMap model)
+	{
+		List<Quote> quoteList = quoteRepository.getRecentlySubmitted(0, 25).getContent();
+		model.addAttribute("quoteList", quoteList);
+		
+		return "/queue";
 	}
 }

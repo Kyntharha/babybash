@@ -26,7 +26,7 @@ public interface QuoteRepository extends JpaRepository<Quote, Long>
 	{
 		Pageable pageable = new PageRequest(page, itemsPerPage);
 		
-		return findPublishedByPublishedIsTrueAndRejectedIsFalseOrderByCreationDateDesc(pageable);
+		return getRecentlyPublished(pageable);
 	}
 	
 	/**
@@ -51,7 +51,7 @@ public interface QuoteRepository extends JpaRepository<Quote, Long>
 	{
 		Pageable pageable = new PageRequest(page, itemsPerPage);
 		
-		return findUnpublishedByPublishedIsFalseAndRejectedIsFalseOrderByCreationDateDesc(pageable);
+		return getRecentlySubmitted(pageable);
 	}
 	
 	/**
